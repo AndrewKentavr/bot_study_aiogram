@@ -29,7 +29,6 @@ async def drinks_chosen(message: types.Message, state: FSMContext):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for size in available_drinks_sizes:
         keyboard.add(size)
-    # для простых шагов можно не указывать название состояния, обходясь next()
     await OrderDrinks.next()
     await message.answer("Теперь выберите размер порции:", reply_markup=keyboard)
 

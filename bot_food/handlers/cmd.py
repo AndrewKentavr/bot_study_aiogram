@@ -1,15 +1,14 @@
-from aiogram import types
+from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from main import dp
 
-
-@dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    keyboard = types.ReplyKeyboardMarkup()
-    button_1 = "/drink"
-    keyboard.add(button_1)
-    button_2 = "/food"
-    keyboard.add(button_2)
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    button_1 = ["/drinks", "/food"]
+    keyboard.add(*button_1)
     await message.answer(f'Привет, {message.from_user.full_name}! '
-                         f'Выбирай')
+                         f'Закажи:', reply_markup=keyboard)
+
+
+def register_handlers_start(dp: Dispatcher):
+    dp.register_message_handler(bot_start, CommandStart(), state="*")
