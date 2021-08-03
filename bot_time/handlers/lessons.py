@@ -10,4 +10,4 @@ async def lesson_start(message: types.Message):
 
 
 def register_handlers_lesson(dp: Dispatcher):
-    dp.register_message_handler(lesson_start, commands='lesson')
+    dp.register_message_handler(lesson_start, commands='lesson', state="*")
