@@ -4,3 +4,4 @@ config.py
 __pycache__/
 /lessons
 /shit
+/bot_time/handlers/cart.py
