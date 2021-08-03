@@ -35,14 +35,6 @@ async def set_commands(bot: Bot):
     await bot.set_my_commands(commands)
 
 
-# async def asc_main():
-#     tasks = [
-#         register_handlers_time(dp),
-#         register_handlers_lesson(dp)
-#     ]
-#     await asyncio.gather(*tasks)
-
 
 if __name__ == "__main__":
-    executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown)
-    # asyncio.run(asc_main())
+    executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown, skip_updates=True)

@@ -2,45 +2,52 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from asyncio import sleep as async_sleep
+from aiogram.dispatcher.filters import Text
+
+from aiogram.utils.callback_data import CallbackData
+
+callback_actions = CallbackData("fabnum", "action")
 
 
-async def time_start(message: types.Message):
-    await message.answer("Введите время:", reply_markup=types.ReplyKeyboardRemove())
-    await TimeBox.time_ask.set()
+def get_keyboard_start():
+    buttons = [
+        'Таймер секунд',
+        'Таймер минут',
+        'Произвольное время'
+    ]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    keyboard.add(*buttons)
+    return keyboard
 
 
-async def time_ask(message: types.Message, state: FSMContext):
-    if message.text != '5':
-        print('ГЕЙ')
-        await message.answer(f'ГЕЙ')
+async def time_start_func(message: types.Message):
+    await message.answer("Выберите Таймер:", reply_markup=get_keyboard_start())
+
+
+async def time_sec_func(message: types.Message):
+    await message.reply("говно", reply_markup=types.ReplyKeyboardRemove())
+    await TimeBox.time_sec_input_func.set()
+
+
+async def time_sec_input_func(message: types.Message, state: FSMContext):
+    try:
+        time_input = int(message.text)
+    except ValueError:
+        await message.answer(f'Неправильные знаки')
     else:
-        time_sec = int(message.text)
-        await state.update_data(chosen_time=time_sec)
-        await message.answer(f'Время пошло: {time_sec}')
-        await time(time_sec)
-        # await TimeBox.next()
-        await message.answer('ТАЙМЕР')
+        # await state.update_data(chosen_time=time_input)
+        await message.answer('Таймер запущен')
+        await async_sleep(time_input)
+        await message.answer('ТАЙМЕР ТАЙМЕР')
         await state.finish()
 
 
-async def time(time_sec):
-    print('БВМДЛВОДМЛОВМДЫТВОМТВЫЛТМДЫТВМ')
-    # user_data = await state.get_data()
-    # await async_sleep(user_data['chosen_time'])
-    await async_sleep(time_sec)
-
-
-# async def end(message: types.Message, state: FSMContext):
-#     await message.answer('ТАЙМЕР')
-#     await state.finish()
-
-
 class TimeBox(StatesGroup):
-    time_ask = State()
-    # end = State()
+    time_sec_input_func = State()
 
 
 def register_handlers_time(dp: Dispatcher):
-    dp.register_message_handler(time_start, commands='time', state="*")
-    dp.register_message_handler(time_ask, state=TimeBox.time_ask)
-    # dp.register_message_handler(end, state=TimeBox.end)
+    dp.register_message_handler(time_start_func, commands='time', state="*")
+    dp.register_message_handler(time_sec_func,
+                                lambda message: message.text == "Таймер секунд" or message.text == '/time_sec')
+    dp.register_message_handler(time_sec_input_func, state=TimeBox.time_sec_input_func)
