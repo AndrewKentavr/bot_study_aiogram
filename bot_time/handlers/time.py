@@ -48,6 +48,8 @@ class TimeBox(StatesGroup):
 
 def register_handlers_time(dp: Dispatcher):
     dp.register_message_handler(time_start_func, commands='time', state="*")
-    dp.register_message_handler(time_sec_func,
-                                lambda message: message.text == "Таймер секунд" or message.text == '/time_sec')
+    # dp.register_message_handler(time_sec_func,
+    #                             lambda message: message.text == "Таймер секунд" or message.text == '/time_sec')
+    dp.register_message_handler(time_sec_func, Text(equals="Таймер секунд"))
+    dp.register_message_handler(time_sec_func, commands="time_sec")
     dp.register_message_handler(time_sec_input_func, state=TimeBox.time_sec_input_func)
