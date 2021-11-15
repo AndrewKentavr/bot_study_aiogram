@@ -1,12 +1,8 @@
-import asyncio
-
-from random import randint
-
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
 
-from bot_food.handlers.register_cmd import reg_cmd
+from handlers.register_cmd import reg_cmd
 from config import BOT_TOKEN, ADMINS
 import logging
 
@@ -31,6 +27,7 @@ async def set_commands(bot: Bot):
     commands = [
         BotCommand(command="/drinks", description="Заказать напитки"),
         BotCommand(command="/food", description="Заказать блюда"),
+        BotCommand(command="/something", description="Просто что-то печатает"),
         BotCommand(command="/start", description="Начать программу")
     ]
     await bot.set_my_commands(commands)
