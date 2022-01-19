@@ -1,3 +1,4 @@
+import emoji
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -16,7 +17,7 @@ async def drinks_start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for name in available_drinks_names:
         keyboard.add(name)
-    await message.answer("Выберите напиток:", reply_markup=keyboard)
+    await message.answer(text="Купи слона " + emoji.emojize(":brain:"), reply_markup=keyboard)
     await OrderDrinks.waiting_for_drink_name.set()
 
 

@@ -7,3 +7,5 @@ __pycache__/
 /bot_time/handlers/cart.py
 /Latand
 /MasterGroosha
+/apscheduler
+/error_state
