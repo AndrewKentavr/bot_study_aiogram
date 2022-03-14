@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# https://proproprogs.ru/modules/matplotlib-otobrazhenie-neskolkih-koordinatnyh-osey-v-odnom-okne
+
 # ------- 1
 
 # plt.subplot(1, 3, 1)
@@ -60,7 +62,6 @@ plt.grid()
 ax[1, 1].plot(np.arange(0, 5, 0.2))
 plt.grid()
 
-
 # 4 И 5 ПУНКТЫ МОЖНО ЗАПУСКАТЬ ОДНОВРЕМЕННО, ПОЛУЧИВ 2 ОКНА
 # ------- 5
 
@@ -69,7 +70,6 @@ ax1 = fig.add_subplot(1, 3, 1)
 ax1.plot(np.arange(0, 5, 0.2))
 
 plt.show()
-
 
 # ------- 6
 
